@@ -19,4 +19,8 @@ export class DevelopersRepository {
   async getContracts(): Promise<IContract[]> {
     return contracts;
   }
+
+  async getContractsByDeveloperId(developerId: string): Promise<IContract[]> {
+    return contracts.filter((contract) => contract.developerId === developerId);
+  }
 }
