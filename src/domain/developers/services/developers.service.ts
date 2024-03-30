@@ -2,6 +2,7 @@ import { inject, injectable } from "inversify";
 import { DevelopersRepository } from "../repositories/developers.repository";
 import { IDeveloper } from "../types";
 import _ from "lodash";
+import { NotFoundError } from "../../../common/errors/not-found.error";
 
 @injectable()
 export class DevelopersService {
@@ -12,6 +13,7 @@ export class DevelopersService {
 
   async getDevelopers(): Promise<IDeveloper[]> {
     const developers = await this.developersRepository.getDevelopers();
+
     return Promise.all(
       developers.map(async (developer) => {
         const revenue = await this.calculateDeveloperRevenue(developer.id);
@@ -22,6 +24,11 @@ export class DevelopersService {
 
   async getDeveloperById(id: string) {
     const developer = await this.developersRepository.getDeveloperById(id);
+
+    if (!developer) {
+      throw new NotFoundError(`Developer ${id} not found`);
+    }
+
     const revenue = await this.calculateDeveloperRevenue(developer.id);
     return { ...developer, revenue };
   }
