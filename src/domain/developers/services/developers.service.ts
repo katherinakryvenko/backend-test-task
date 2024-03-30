@@ -26,7 +26,7 @@ export class DevelopersService {
     const developer = await this.developersRepository.getDeveloperById(id);
 
     if (!developer) {
-      throw new NotFoundError(`Developer ${id} not found`);
+      throw new NotFoundError(`Developer with id "${id}" not found`);
     }
 
     const revenue = await this.calculateDeveloperRevenue(developer.id);
