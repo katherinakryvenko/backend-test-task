@@ -10,7 +10,16 @@ export const getDevelopers: IApiOperationArgsBase = {
   summary:
     "Get full list of developers (used by developers management dashboard and contracts management dashboard)",
   path: "/",
-  parameters: {},
+  parameters: {
+    query: {
+      includeExtended: {
+        description:
+          "If set to true, includes extended information (such as revenue, for example) in the response",
+        required: false,
+        type: "boolean",
+      },
+    },
+  },
   responses: {
     200: {
       description: "Success",
@@ -25,6 +34,14 @@ export const getDeveloperById: IApiOperationArgsBase = {
   path: "/{id}",
   parameters: {
     path: { id: { required: true, name: "id", description: "Developer id" } },
+    query: {
+      includeExtended: {
+        description:
+          "If set to true, includes extended information (such as revenue, for example) in the response",
+        required: false,
+        type: "boolean",
+      },
+    },
   },
   responses: {
     200: {
