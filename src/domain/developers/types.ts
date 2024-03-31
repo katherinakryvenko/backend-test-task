@@ -5,8 +5,10 @@ export interface IDeveloper {
   lastName?: string;
 
   email: string;
+}
 
-  revenue?: number;
+export interface IDeveloperExtended extends IDeveloper {
+  revenue: number;
 }
 
 export interface IContract {
