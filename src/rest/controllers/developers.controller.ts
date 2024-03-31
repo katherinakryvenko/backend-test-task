@@ -33,11 +33,12 @@ export class DevelopersController
   public async getDevelopers(
     @queryParam("includeExtended") includeExtended: string
   ): Promise<DeveloperDto[]> {
-    if (includeExtended === "true") {
-      return this.developersService.getDevelopersExtended();
-    } else {
-      return this.developersService.getDevelopers();
-    }
+    const developers =
+      includeExtended === "true"
+        ? await this.developersService.getDevelopersExtended()
+        : await this.developersService.getDevelopers();
+
+    return developers.map(DeveloperDto.from);
   }
 
   @httpGet("/:id")
@@ -46,10 +47,11 @@ export class DevelopersController
     @requestParam("id") id: string,
     @queryParam("includeExtended") includeExtended: string
   ): Promise<DeveloperDto> {
-    if (includeExtended === "true") {
-      return this.developersService.getDeveloperByIdExtended(id);
-    } else {
-      return this.developersService.getDeveloperById(id);
-    }
+    const developer =
+      includeExtended === "true"
+        ? await this.developersService.getDeveloperByIdExtended(id)
+        : await this.developersService.getDeveloperById(id);
+
+    return DeveloperDto.from(developer);
   }
 }

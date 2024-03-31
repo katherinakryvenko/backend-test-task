@@ -1,5 +1,5 @@
 import { ApiModel, ApiModelProperty } from "swagger-express-ts";
-import { IDeveloper } from "../../domain/developers/types";
+import { IDeveloper, IDeveloperExtended } from "../../domain/developers/types";
 
 @ApiModel()
 export class DeveloperDto implements IDeveloper {
@@ -17,4 +17,18 @@ export class DeveloperDto implements IDeveloper {
 
   @ApiModelProperty()
   revenue?: number;
+
+  static from(developer: IDeveloper | IDeveloperExtended): DeveloperDto {
+    const dto = new DeveloperDto();
+    dto.id = developer.id;
+    dto.firstName = developer.firstName;
+    dto.lastName = developer.lastName;
+    dto.email = developer.email;
+
+    if ("revenue" in developer && developer.revenue !== undefined) {
+      dto.revenue = developer.revenue;
+    }
+
+    return dto;
+  }
 }
