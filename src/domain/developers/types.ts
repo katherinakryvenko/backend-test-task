@@ -1,10 +1,22 @@
 export interface IDeveloper {
+  id: string;
 
-	id: string
+  firstName?: string;
+  lastName?: string;
 
-	firstName?: string
-	lastName?: string
+  email: string;
+}
 
-	email: string
+export interface IDeveloperExtended extends IDeveloper {
+  revenue: number;
+}
 
+export interface IContract {
+  id: number;
+
+  developerId: string;
+
+  status: "pending" | "completed" | "ongoing";
+
+  amount: number;
 }
